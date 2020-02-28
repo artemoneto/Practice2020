@@ -37,6 +37,30 @@ Ftip = np.array([0, 0, 0, 0, 0, 0]).T
 
 T = 0
 t_start = 0
+t_finish = 3
+delta_t = 0.001
+THETAS = np.array([theta]).copy()
+
+while (T < (t_finish - t_start)) :
+    print('\nFor iteration ',T,' positions are: ', theta)
+    theta_double_dot = mr.ForwardDynamics(theta, theta_dot, tau, g, Ftip, Mlist, Glist, Slist)
+    print('\nFor iteration ',T,' accelerations are: ', theta_double_dot)
+    theta = theta + theta_dot*delta_t
+    theta_dot = theta_dot + theta_double_dot*delta_t
+    THETAS = np.append(THETAS, [theta], axis=0)
+    T = T + delta_t
+
+np.savetxt('THETAS_1.csv', THETAS, fmt='%.6f', delimiter=",")
+
+theta = np.array([0, -1, 0, 0, 0, 0]).T
+theta_dot = np.array([0, 0, 0, 0, 0, 0]).T
+theta_double_dot = np.array([0, 0, 0, 0, 0, 0]).T
+g = np.array([0, 0, -9.81]).T
+tau = np.array([0, 0, 0, 0, 0, 0]).T
+Ftip = np.array([0, 0, 0, 0, 0, 0]).T
+
+T = 0
+t_start = 0
 t_finish = 5
 delta_t = 0.001
 THETAS = np.array([theta]).copy()
@@ -50,4 +74,4 @@ while (T < (t_finish - t_start)) :
     THETAS = np.append(THETAS, [theta], axis=0)
     T = T + delta_t
 
-np.savetxt('THETAS.csv', THETAS, fmt='%.6f', delimiter=",")
+np.savetxt('THETAS_2.csv', THETAS, fmt='%.6f', delimiter=",")
